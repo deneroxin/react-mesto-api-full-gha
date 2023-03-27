@@ -1,0 +1,27 @@
+@keyframes loading {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.loading {
+  min-height: calc(100vh - 120px);
+  position: relative;
+}
+
+.loading::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 70px;
+  height: 70px;
+  border: 20px solid grey;
+  border-right-color: #13d;
+  border-radius: 50%;
+  animation: loading 1s infinite ease-in-out;
+}

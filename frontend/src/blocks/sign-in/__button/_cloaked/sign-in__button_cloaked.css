@@ -1,0 +1,5 @@
+.sign-in__button_cloaked {
+  border: 2px solid var(--color-white);
+  background-color: transparent;
+  color: var(--color-text-bright);
+}

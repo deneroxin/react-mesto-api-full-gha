@@ -1,0 +1,6 @@
+.sign-in__error-sheet {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}

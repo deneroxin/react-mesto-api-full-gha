@@ -1,0 +1,3 @@
+.popup__input-box_error, .popup__input-box_error:focus {
+  border-bottom-color: red;
+}

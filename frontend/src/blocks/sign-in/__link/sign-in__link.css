@@ -1,0 +1,5 @@
+.sign-in__link {
+  margin-left: 10px;
+  color: var(--color-text-bright);
+  text-decoration: none;
+}

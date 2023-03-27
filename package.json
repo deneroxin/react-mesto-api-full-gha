@@ -1,0 +1,57 @@
+{
+  "name": "express-mesto-full-gha",
+  "version": "1.0.0",
+  "description": "Frontend and backend for mesto",
+  "main": "backend/app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deneroxin/react-mesto-api-full-gha.git"
+  },
+  "scripts": {
+    "start": "node backend/app.js",
+    "dev": "nodemon backend/app.js",
+    "lint": "npx eslint ./backend",
+    "build-front": "react-app-rewired build",
+    "start-front": "react-app-rewired start"
+  },
+  "author": "Erokhin",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "celebrate": "15.0.1",
+    "cookie-parser": "1.4.6",
+    "express": "4.18.2",
+    "express-rate-limit": "6.7.0",
+    "express-winston": "4.2.0",
+    "helmet": "6.0.1",
+    "jsonwebtoken": "9.0.0",
+    "mongoose": "7.0.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router": "6.8.0",
+    "react-router-dom": "6.8.0",
+    "react-scripts": "5.0.1",
+    "validator": "13.9.0",
+    "web-vitals": "2.1.4",
+    "winston": "3.8.2"
+  },
+  "devDependencies": {
+    "eslint": "8.35.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-plugin-import": "2.27.5",
+    "nodemon": "2.0.20",
+    "react-app-rewired": "^2.2.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

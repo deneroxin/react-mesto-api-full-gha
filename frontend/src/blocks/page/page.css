@@ -1,0 +1,6 @@
+.page {
+  margin: 0 auto;
+  max-width: 880px;
+  --width: calc(282px + (100vw - 320px) * (880 - 282) / (1023 - 320));
+  --padding: max(30px, calc((100% - var(--width)) / 2));
+}

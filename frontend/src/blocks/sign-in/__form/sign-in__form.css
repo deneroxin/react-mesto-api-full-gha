@@ -1,0 +1,5 @@
+.sign-in__form {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: stretch;
+}

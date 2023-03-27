@@ -1,0 +1,79 @@
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/fonts.css);
+
+@import url(./blocks/entire-space/entire-space.css);
+@import url(./blocks/page/page.css);
+
+@import url(./blocks/interactive/interactive.css);
+
+@import url(./blocks/header/header.css);
+@import url(./blocks/header/__band/header__band.css);
+@import url(./blocks/header/__logo/header__logo.css);
+@import url(./blocks/header/__menu-button/header__menu-button.css);
+@import url(./blocks/header/__nav/header__nav.css);
+@import url(./blocks/header/__user-email/header__user-email.css);
+@import url(./blocks/header/__link/header__link.css);
+
+@import url(./blocks/main/main.css);
+
+@import url(./blocks/profile/profile.css);
+@import url(./blocks/profile/_hidden/profile_hidden.css);
+@import url(./blocks/profile/__avatar/profile__avatar.css);
+@import url(./blocks/profile/__text-container/profile__text-container.css);
+@import url(./blocks/profile/__name-container/profile__name-container.css);
+@import url(./blocks/profile/__name/profile__name.css);
+@import url(./blocks/profile/__edit-button/profile__edit-button.css);
+@import url(./blocks/profile/__about/profile__about.css);
+@import url(./blocks/profile/__add-button/profile__add-button.css);
+
+@import url(./blocks/card/card.css);
+@import url(./blocks/card/_removed/card_removed.css);
+@import url(./blocks/card/__image/card__image.css);
+@import url(./blocks/card/__remove-button/card__remove-button.css);
+@import url(./blocks/card/__footer/card__footer.css);
+@import url(./blocks/card/__subscript/card__subscript.css);
+@import url(./blocks/card/__like-button/card__like-button.css);
+@import url(./blocks/card/__like-button/_active/card__like-button_active.css);
+@import url(./blocks/card/__num-likes/card__num-likes.css);
+
+@import url(./blocks/elements/elements.css);
+@import url(./blocks/elements/__cards/elements__cards.css);
+@import url(./blocks/elements/__empty-indicator/elements__empty-indicator.css);
+@import url(./blocks/elements/__empty-indicator/_hidden/elements__empty-indicator_hidden.css);
+
+@import url(./blocks/footer/footer.css);
+@import url(./blocks/footer/__copyright/footer__copyright.css);
+
+@import url(./blocks/popup/popup.css);
+@import url(./blocks/popup/_opened/popup_opened.css);
+@import url(./blocks/popup/_type/popup_type_view-card.css);
+@import url(./blocks/popup/__container/popup__container.css);
+@import url(./blocks/popup/__container/_type/popup__container_type_dialog.css);
+@import url(./blocks/popup/__container/_type/popup__container_type_info.css);
+@import url(./blocks/popup/__title/popup__title.css);
+@import url(./blocks/popup/__form/popup__form.css);
+@import url(./blocks/popup/__input-box/popup__input-box.css);
+@import url(./blocks/popup/__input-box/_error/popup__input-box_error.css);
+@import url(./blocks/popup/__error/popup__error.css);
+@import url(./blocks/popup/__confirm-button/popup__confirm-button.css);
+@import url(./blocks/popup/__confirm-button/_disabled/popup__confirm-button_disabled.css);
+@import url(./blocks/popup/__close-button/popup__close-button.css);
+@import url(./blocks/popup/__image/popup__image.css);
+@import url(./blocks/popup/__subscript/popup__subscript.css);
+@import url(./blocks/popup/__server-error/popup__server-error.css);
+@import url(./blocks/popup/__icon/popup__icon.css);
+@import url(./blocks/popup/__message/popup__message.css);
+
+@import url(./blocks/sign-in/sign-in.css);
+@import url(./blocks/sign-in/__title/sign-in__title.css);
+@import url(./blocks/sign-in/__form/sign-in__form.css);
+@import url(./blocks/sign-in/__input/sign-in__input.css);
+@import url(./blocks/sign-in/__error/sign-in__error.css);
+@import url(./blocks/sign-in/__button/sign-in__button.css);
+@import url(./blocks/sign-in/__button/_cloaked/sign-in__button_cloaked.css);
+@import url(./blocks/sign-in/__subscript/sign-in__subscript.css);
+@import url(./blocks/sign-in/__link/sign-in__link.css);
+@import url(./blocks/sign-in/__error-sheet/sign-in__error-sheet.css);
+@import url(./blocks/sign-in/__wait-sign/sign-in__wait-sign.css);
+
+@import url(./blocks/loading/loading.css);

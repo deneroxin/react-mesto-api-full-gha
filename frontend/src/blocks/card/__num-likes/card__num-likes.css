@@ -1,0 +1,11 @@
+.card__num-likes {
+  grid-area: num-likes;
+  justify-self: center;
+  margin: 0;
+  padding-top: 3px;
+  font-family: 'Inter';
+  font-size: 13px;
+  line-height: 13px;
+  font-weight: normal;
+  color: var(--color-text-dark);
+}

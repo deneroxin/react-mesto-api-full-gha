@@ -1,0 +1,11 @@
+.card__like-button {
+  grid-area: like-button;
+  width: 22px;
+  height: 19px;
+  background: transparent url(./card__like-button.svg);
+  border: none;
+}
+
+.card__like-button:hover {
+  opacity: 0.5; /* переопределяем стандартный opacity, представленный модификатором link */
+}

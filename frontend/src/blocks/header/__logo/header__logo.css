@@ -1,0 +1,10 @@
+.header__logo {
+  height: 33px;
+  width: auto;
+}
+
+@media (max-width: 432px) {
+  .header__logo {
+    height: calc(100vw * 24.4 / 320);
+  }
+}

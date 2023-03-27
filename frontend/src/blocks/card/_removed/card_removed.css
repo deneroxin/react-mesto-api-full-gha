@@ -1,0 +1,5 @@
+.card_removed {
+  opacity: 0;
+  transform: rotateX(-90deg) rotateY(-90deg) scale(.7);
+  transition: transform .5s ease-in-out, opacity .5s linear;
+}

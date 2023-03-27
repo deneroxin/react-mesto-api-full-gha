@@ -1,0 +1,24 @@
+.sign-in__input {
+  margin: 27px 0 0;
+  padding: 13px 0;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  font-size: 14px;
+  line-height: 14px;
+  color: var(--color-text-bright);
+  background-color: transparent;
+}
+
+.sign-in__input:first-of-type {
+  margin: 0;
+}
+
+.sign-in__input:placeholder {
+  opacity: .6;
+}
+
+.sign-in__input:focus-visible {
+  outline: none;
+  background-color: #222;
+}

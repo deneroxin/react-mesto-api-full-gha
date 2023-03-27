@@ -1,0 +1,11 @@
+.card__subscript {
+  grid-area: subscript;
+  margin: 0;
+  line-height: 29px;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--color-text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

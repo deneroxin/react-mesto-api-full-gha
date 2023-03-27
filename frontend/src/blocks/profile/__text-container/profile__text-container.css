@@ -1,0 +1,14 @@
+.profile__text-container {
+  margin: 0 30px;
+  max-width: calc(100% - 120px - 30px - 30px - 50px);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 480px) {
+  .profile__text-container {
+    margin: 0;
+    max-width: none;
+    align-items: center;
+  }
+}

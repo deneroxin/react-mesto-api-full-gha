@@ -1,0 +1,12 @@
+.header__band {
+  padding: 45px var(--padding) 41px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 422px) {
+  .header__band {
+    padding: 28px var(--padding) 31.6px;
+  }
+}

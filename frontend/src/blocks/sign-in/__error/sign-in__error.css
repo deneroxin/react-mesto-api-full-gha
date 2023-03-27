@@ -1,0 +1,17 @@
+.sign-in__error {
+  display: block;
+  margin: 0 0 24px;
+  line-height: 20px;
+  font-size: 16px;
+  color: #f88;
+}
+
+.sign-in__error:last-of-type {
+  margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+  .sign-in__error {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,12 @@
+.card__footer {
+  padding: 0 15px 0 21px;
+  min-height: 80px;
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  justify-content: space-between;
+  align-content: center;
+  grid-template-areas:
+    "subscript like-button"
+    "subscript num-likes";
+  background: var(--color-white);
+}

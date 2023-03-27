@@ -1,0 +1,10 @@
+.profile__name-container {
+  display: flex;
+  align-items: baseline;
+}
+
+@media (max-width: 480px) {
+  .profile__name-container {
+    margin-left: calc(10px + 18px); /* отцентровать надпись без учёта выступающей кнопки, засчёт организации слева такого же пространства, как кнопка вместе с зазором до неё */
+  }
+}

@@ -1,0 +1,17 @@
+.popup__container_type_dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: 34px 36px 37px;
+  width: 430px;
+  background: var(--color-white);
+  border-radius: 10px;
+}
+
+@media (max-width: 480px) {
+  .popup__container_type_dialog {
+    width: 282px;
+    padding: 0 22px;
+  }
+}

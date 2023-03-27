@@ -1,0 +1,17 @@
+.sign-in {
+  box-sizing: border-box;
+  padding: 60px 0 80px;
+  min-height: calc(100vh - 120px);
+  width: 358px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  justify-items: stretch;
+}
+
+@media (max-width: 480px) {
+  .sign-in {
+    padding: 40px 0;
+    width: calc(260px + (100vw - 320px) * (358 - 260) / (480 - 320));
+  }
+}

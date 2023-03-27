@@ -1,0 +1,13 @@
+.entire-space {
+  --color-background: black;
+  --color-white: white;
+  --color-text-bright: white;
+  --color-text-dark: black;
+  --color-dim: #545454;
+  --color-dim-transparent: rgba(84, 84, 84, .7);
+  --color-popup: rgba(0,0,0,.5);
+  overflow-x: hidden;
+  margin: 0;
+  background: var(--color-background);
+  font-family: Inter, Arial, sans-serif;
+}

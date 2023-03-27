@@ -1,0 +1,19 @@
+.header__link {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-weight: normal;
+  font-size: 18px;
+  color: var(--color-text-bright);
+}
+
+@media (max-width: 432px) {
+  .header__link {
+    font-size: calc(14px + (18 - 14) * (100vw - 320px) / (432 - 320));
+  }
+
+  .authorized.header_menu-invoked .header__link {
+    font-size: 18px;
+  }
+}

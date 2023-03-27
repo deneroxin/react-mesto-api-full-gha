@@ -1,0 +1,19 @@
+@keyframes waiting {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sign-in__wait-sign {
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+  border: 10px solid grey;
+  border-right-color: #13d;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: waiting 1s infinite ease-in-out;
+}

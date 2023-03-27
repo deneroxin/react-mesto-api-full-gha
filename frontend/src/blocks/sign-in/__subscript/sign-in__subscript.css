@@ -1,0 +1,7 @@
+.sign-in__subscript {
+  margin: 15px 0 0;
+  line-height: 17px;
+  font-size: 14px;
+  color: var(--color-text-bright);
+  text-align: center;
+}

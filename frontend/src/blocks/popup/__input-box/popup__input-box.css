@@ -1,0 +1,16 @@
+.popup__input-box {
+  display: block;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin: 0;
+  padding: 1px 0 calc(10px - 1px);
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  color: var(--color-text-dark);
+  background: var(--color-white);
+}
+
+.popup__input-box:focus {
+  outline: 2px solid var(--color-dim);
+  border-radius: 2px;
+}
