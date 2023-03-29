@@ -21,6 +21,7 @@ module.exports = {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
+            domain: 'api.mesto.deneroxin.nomoredomains.work',
           })
           .send(user);
       })
