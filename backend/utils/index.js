@@ -24,10 +24,16 @@ function createRateLimiter(minutes, tries) {
   });
 }
 
+function getSecretKey() {
+  const { NODE_ENV, JWT_SECRET } = process.env;
+  return NODE_ENV === 'production' ? JWT_SECRET : 'hardcoded_secret_key';
+}
+
 module.exports = {
   validationPatterns,
   validators: {
     isURL: (string) => validationPatterns.patternURL.test(string),
   },
   createRateLimiter,
+  getSecretKey,
 };

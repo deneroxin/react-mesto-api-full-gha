@@ -10,6 +10,12 @@ const { validationPatterns, createRateLimiter } = require('../utils');
 const tightLimiter = createRateLimiter(5, 100);
 const looseLimiter = createRateLimiter(5, (req) => (req.path.endsWith('/likes') ? 5000 : 1000));
 
+router.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 router.post('/signin', tightLimiter, celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),

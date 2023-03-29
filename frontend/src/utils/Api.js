@@ -81,7 +81,3 @@ const api = new Api({
 });
 
 export default api;
-
-
-// https://mesto.nomoreparties.co/v1/cohort-54',
-// authorization: 'e5727828-c175-4d60-8ac9-c1e0fda08d91',

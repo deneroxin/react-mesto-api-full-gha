@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+const { getSecretKey } = require('../utils');
 const { GeneralError, Status, throwError } = require('../error');
 
 module.exports = {
@@ -11,7 +12,7 @@ module.exports = {
       .then((user) => {
         const token = jwt.sign(
           { _id: user._id },
-          'hardcoded-secret-key',
+          getSecretKey(),
           { expiresIn: '7d' },
         );
         res.status(Status.OK)

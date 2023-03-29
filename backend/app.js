@@ -1,9 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { Status } = require('./error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+dotenv.config();
 
 const { PORT = 3000 } = process.env;
 const allowedCors = [
@@ -16,6 +19,8 @@ const app = express();
 
 app.use(helmet());
 app.use(express.json());
+
+app.use(requestLogger);
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -36,7 +41,6 @@ app.use((req, res, next) => {
   }
 });
 
-app.use(requestLogger);
 app.use('/api', require('./routes'));
 
 app.use(errorLogger);
