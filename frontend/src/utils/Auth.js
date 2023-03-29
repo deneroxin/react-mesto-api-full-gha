@@ -23,7 +23,8 @@ class Auth {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      credentials: 'include'
     })
     .then(this._getData);
   }
