@@ -11,7 +11,6 @@ dotenv.config();
 const { PORT = 3000 } = process.env;
 const allowedCors = [
   'https://mesto.deneroxin.nomoredomains.work',
-  'http://localhost:3000',
 ];
 const ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
@@ -41,7 +40,7 @@ app.use((req, res, next) => {
   }
 });
 
-app.use('/api', require('./routes'));
+app.use(require('./routes'));
 
 app.use(errorLogger);
 app.use(errors());
