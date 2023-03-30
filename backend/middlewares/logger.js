@@ -2,7 +2,7 @@ const winston = require('winston');
 const fs = require('fs');
 const expressWinston = require('express-winston');
 
-function bodyLogger() {
+function createBodyLogger() {
   if (process.env.NODE_ENV === 'debug') {
     return function (req, res, next) {
       fs.appendFile('console.log', `${JSON.stringify(req.body)}\n`, next);
@@ -29,5 +29,5 @@ module.exports = {
     format: winston.format.json(),
   }),
 
-  bodyLogger,
+  bodyLogger: createBodyLogger(),
 };
