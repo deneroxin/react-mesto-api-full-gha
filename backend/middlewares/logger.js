@@ -7,6 +7,7 @@ module.exports = {
       new winston.transports.File({ filename: 'request.log' }),
     ],
     format: winston.format.json(),
+    msg: (req, res) => `${req.protocol}://${req.method} --> ${res.statusCode}`,
   }),
 
   errorLogger: expressWinston.errorLogger({

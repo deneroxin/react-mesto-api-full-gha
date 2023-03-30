@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
@@ -7,6 +8,8 @@ const { Status } = require('./error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 dotenv.config();
+
+// const logFile = fs.createWriteStream('./console.log', { flags: 'a' });
 
 const { PORT = 3000 } = process.env;
 const allowedCors = [
@@ -20,9 +23,17 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
-app.use(requestLogger, {
-  msg: (req, res) => `${req.protocol}://${req.method} || ${req.body} || ${res.statusCode} - ${res.message}`,
+app.use((req, res, next) => {
+  // logFile.write(JSON.stringify(req.body), next);
+  try {
+    fs.appendFileSync('console.log', `${JSON.stringify(req.body)}\n\n`);
+  } catch (err) {
+    next(err);
+  }
+  next();
 });
+
+app.use(requestLogger);
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -45,9 +56,7 @@ app.use((req, res, next) => {
 
 app.use(require('./routes'));
 
-app.use(errorLogger, {
-  msg: '{{err.message}} {{res.statusCode}} {{req.method}}',
-});
+app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
