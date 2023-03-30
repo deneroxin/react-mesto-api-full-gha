@@ -5,6 +5,7 @@ module.exports = {
 
   getAllCards: (req, res, next) => {
     Card.find({})
+      .populate('likes')
       .then((result) => {
         res.status(Status.OK).send(result);
       })

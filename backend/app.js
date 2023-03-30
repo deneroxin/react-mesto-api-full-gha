@@ -12,7 +12,6 @@ const { PORT = 3000 } = process.env;
 const allowedCors = [
   'https://mesto.deneroxin.nomoredomains.work',
   'http://localhost:3000',
-  'https://localhost:3000',
 ];
 const ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
@@ -21,7 +20,9 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
-app.use(requestLogger);
+app.use(requestLogger, {
+  msg: (req, res) => `${req.protocol}://${req.method} || ${req.body} || ${res.statusCode} - ${res.message}`,
+});
 
 app.use((req, res, next) => {
   const { origin } = req.headers;
@@ -44,7 +45,9 @@ app.use((req, res, next) => {
 
 app.use(require('./routes'));
 
-app.use(errorLogger);
+app.use(errorLogger, {
+  msg: '{{err.message}} {{res.statusCode}} {{req.method}}',
+});
 app.use(errors());
 
 app.use((err, req, res, next) => {

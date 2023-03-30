@@ -82,7 +82,7 @@ module.exports = {
   },
 
   updateUserData: (req, res, next) => {
-    User.findByIdAndUpdate(req.user._id, req.body, { runValidators: true, new: true })
+    User.findByIdAndUpdate(req.user._id, req.body, { runValidators: true, new: true, returnDocument: 'after' })
       .then((updatedUserData) => {
         // поскольку req.user._id берётся из payload токена, а не путём поиска в базе данных,
         // то нет уверенности, что в базе данных такой пользователь всё ещё есть.
