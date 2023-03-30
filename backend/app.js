@@ -11,6 +11,8 @@ dotenv.config();
 const { PORT = 3000 } = process.env;
 const allowedCors = [
   'https://mesto.deneroxin.nomoredomains.work',
+  'http://localhost:3000',
+  'https://localhost:3000',
 ];
 const ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
