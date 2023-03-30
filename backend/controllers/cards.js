@@ -15,7 +15,7 @@ module.exports = {
     req.body.owner = req.user._id;
     Card.create(req.body)
       .then((createdCard) => {
-        res.status(Status.CREATED).send({ data: createdCard });
+        res.status(Status.CREATED).send(createdCard);
       })
       .catch((err) => throwError(err, next));
   },

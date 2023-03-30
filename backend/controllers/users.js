@@ -21,7 +21,6 @@ module.exports = {
             httpOnly: true,
             sameSite: 'none',
             secure: true,
-            domain: 'api.mesto.deneroxin.nomoredomains.work',
           })
           .send(user);
       })
@@ -82,7 +81,7 @@ module.exports = {
         // то нет уверенности, что в базе данных такой пользователь всё ещё есть.
         // За время хранения токена база данных могла быть повреждена, и пользователь удалился.
         if (!updatedUserData) throw new GeneralError('Вас нет в базе данных', Status.NOT_FOUND);
-        res.status(Status.OK).send({ data: updatedUserData });
+        res.status(Status.OK).send(updatedUserData);
       })
       .catch((err) => throwError(err, next));
   },
