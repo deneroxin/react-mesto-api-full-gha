@@ -8,7 +8,7 @@ export default function Card({cardData, cardHandlers}) {
   const myID = React.useContext(CurrentUserContext)._id;
   const isLiked = cardData.likes.some(user => user._id == myID);
   const numLikes = cardData.likes.length;
-  const isMine = cardData.owner._id == myID;
+  const isMine = cardData.owner === myID;
 
   function handleClick() {
     cardHandlers.handleCardClick(cardData);
