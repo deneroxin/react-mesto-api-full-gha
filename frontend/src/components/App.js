@@ -66,9 +66,13 @@ export default function App() {
   }
 
   function exit() {
-    setCurrentUser(null);
-    setLoadingComplete(false);
-    navigate('/sign-in');
+    auth.signOut()
+      .then(() => {
+        setCurrentUser(null);
+        setLoadingComplete(false);
+        navigate('/sign-in');
+      })
+      .catch((err) => console.log(err.message));
   }
 
   function handleLoginSubmit(data, onSuccess, onError) {

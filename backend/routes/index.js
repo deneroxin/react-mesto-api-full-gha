@@ -2,8 +2,8 @@ const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 const { Joi, celebrate } = require('celebrate');
 const { GeneralError, Status } = require('../error');
-const { login, createUser } = require('../controllers/users');
-const auth = require('../middlewares/auth');
+const { login, clearCookie, createUser } = require('../controllers/users');
+const authorize = require('../middlewares/auth');
 const { validationPatterns, createRateLimiter } = require('../utils');
 
 // Число запросов увеличено в 10 раз для того, чтобы тест прошёл нормально.
@@ -33,11 +33,9 @@ router.post('/signup', tightLimiter, celebrate({
   }),
 }), createUser);
 
-router.get('/signout', (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход' });
-});
+router.get('/signout', clearCookie);
 
-router.use(looseLimiter, cookieParser(), auth);
+router.use(looseLimiter, cookieParser(), authorize);
 
 router.use('/users', require('./users'));
 router.use('/cards', require('./cards'));

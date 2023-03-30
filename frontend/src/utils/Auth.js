@@ -28,12 +28,20 @@ class Auth {
     })
     .then(this._getData);
   }
+
+  signOut() {
+    return fetch(`${this._baseUrl}/signout`, {
+      method: 'GET',
+      credentials: 'include'
+    })
+    .then(this._getData);
+  }
 }
 
 const auth = new Auth({
   baseUrl: 'https://api.mesto.deneroxin.nomoredomains.work',
   commonHeaders: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json; charset="utf-8"'
   }
 });
 

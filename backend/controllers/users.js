@@ -27,6 +27,13 @@ module.exports = {
       .catch((err) => throwError(err, next));
   },
 
+  clearCookie: (req, res) => {
+    res.clearCookie('jwt', {
+      sameSite: 'none',
+      secure: true,
+    }).send({ message: 'Выход' });
+  },
+
   getAllUsers: (req, res, next) => {
     User.find({})
       .then((arrayOfUsers) => {
