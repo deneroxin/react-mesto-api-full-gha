@@ -75,7 +75,7 @@ class Api {
 
 const api = new Api({
   baseUrl: 'https://api.mesto.deneroxin.nomoredomains.work',
-  headers: {
+  commonHeaders: {
     'Content-Type': 'application/json; charset="utf-8"'
   }
 });

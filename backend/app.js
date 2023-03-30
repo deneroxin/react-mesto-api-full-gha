@@ -1,15 +1,12 @@
 const express = require('express');
-const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { Status } = require('./error');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger, bodyLogger } = require('./middlewares/logger');
 
 dotenv.config();
-
-// const logFile = fs.createWriteStream('./console.log', { flags: 'a' });
 
 const { PORT = 3000 } = process.env;
 const allowedCors = [
@@ -23,15 +20,7 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
-app.use((req, res, next) => {
-  // logFile.write(JSON.stringify(req.body), next);
-  try {
-    fs.appendFileSync('console.log', `${JSON.stringify(req.body)}\n\n`);
-  } catch (err) {
-    next(err);
-  }
-  next();
-});
+app.use(bodyLogger);
 
 app.use(requestLogger);
 
