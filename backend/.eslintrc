@@ -9,9 +9,6 @@
   "plugins": [
     "import"
   ],
-  "ignorePatterns": [
-    "frontend/**"
-  ],
   "rules": {
     "no-underscore-dangle": ["error", { "allow": ["_id"] }]
   }
