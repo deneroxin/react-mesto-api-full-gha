@@ -16,12 +16,13 @@ module.exports = {
           { expiresIn: '7d' },
         );
         res.status(Status.OK)
-          .cookie('jwt', token, {
-            maxAge: 3600000 * 24 * 7,
-            httpOnly: true,
-            sameSite: 'none',
-            secure: true,
-          })
+          // .cookie('jwt', token, {
+          //   maxAge: 3600000 * 24 * 7,
+          //   httpOnly: true,
+          //   sameSite: 'none',
+          //   secure: true,
+          // })
+          .set('Authorization', token)
           .send(user);
       })
       .catch((err) => throwError(err, next));

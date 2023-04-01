@@ -35,6 +35,7 @@ export default function App() {
   const navigate = useNavigate();
 
   React.useEffect(function checkAuthorization() {
+    api.prepareAuthorizationHeader(); // Если авторизуемся через заголовки, то вызываем этот метод.
     // При первоначальном запуске приложения пробуем запросить информацию о себе.
     // Если у нас есть cookie с токеном, и он не просрочен, то запрос будет выполнен.
     // В этом случае мы переходим на корневой маршрут, даже если пользователь набрал /sign-up или /sign-in
@@ -49,6 +50,7 @@ export default function App() {
   function authorize(authorizationRequest) {
     return authorizationRequest
       .then((userData) => {
+        api.prepareAuthorizationHeader(); // Если авторизуемся через заголовки, то вызываем этот метод.
         setCurrentUser(userData);
         navigate('/', { replace: true });
         return api.getInitialCards();
@@ -68,6 +70,8 @@ export default function App() {
   function exit() {
     auth.signOut()
       .then(() => {
+        api.clearAuthorizationHeader(); // Если авторизуемся через заголовки, то вызываем этот метод.
+        localStorage.removeItem('jwt'); // Если авторизуемся через заголовки, то вызываем этот метод.
         setCurrentUser(null);
         setLoadingComplete(false);
         navigate('/sign-in');

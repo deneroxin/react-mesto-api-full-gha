@@ -9,7 +9,7 @@ module.exports = function authorize(req, res, next) {
     // Тест не хочет работать с куками, поэтому пришлось добавить альтернативный
     // метод авторицации, через заголовок, чтобы можно было пройти тесты.
     token = req.get('Authorization');
-    if (!token) next(error);
+    if (!token || !token.startsWith('Bearer ')) next(error);
     token = token.replace('Bearer ', '');
   }
   try {
