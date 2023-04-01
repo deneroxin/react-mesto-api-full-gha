@@ -23,6 +23,7 @@ module.exports = {
           //   secure: true,
           // })
           .set('Authorization', token)
+          .set('Access-Control-Expose-Headers', 'Authorization')
           .send(user);
       })
       .catch((err) => throwError(err, next));
