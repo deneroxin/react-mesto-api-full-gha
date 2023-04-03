@@ -16,7 +16,7 @@ module.exports = {
           { expiresIn: '7d' },
         );
         res.status(Status.OK);
-        const method = process.env.AUTHENTICATION_METHOD.toLowerCase();
+        const method = process.env.AUTHENTICATION_METHOD;
         if (method === 'cookie') {
           res.cookie('jwt', token, {
             maxAge: 3600000 * 24 * 7,
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   clearCookie: (req, res) => {
-    if (process.env.AUTHENTICATION_METHOD.toLowerCase() === 'cookie') {
+    if (process.env.AUTHENTICATION_METHOD === 'cookie') {
       res.clearCookie('jwt', {
         sameSite: 'none',
         secure: true,

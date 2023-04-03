@@ -4,7 +4,7 @@ const { GeneralError, Status } = require('../error');
 
 module.exports = function authorize(req, res, next) {
   let token;
-  const method = process.env.AUTHENTICATION_METHOD.toLowerCase();
+  const method = process.env.AUTHENTICATION_METHOD;
   const error = new GeneralError('Необходима авторизация', Status.UNAUTHORIZED);
   if (method === 'cookie') {
     token = req.cookies.jwt;
