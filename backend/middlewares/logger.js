@@ -6,6 +6,18 @@ const { combine, printf } = winston.format;
 const dev = (process.env.NODE_ENV === 'development');
 const str = JSON.stringify;
 
+const headerBlacklist = [
+  'Server', 'Content-Length', 'Connection', 'Content-Security-Policy',
+  'Cross-Origin-Embedder-Policy', 'Cross-Origin-Opener-Policy',
+  'Cross-Origin-Resource-Policy', 'X-DNS-Prefetch-Control', 'X-Frame-Options',
+  'Strict-Transport-Security', 'X-Download-Options', 'X-Content-Type-Options',
+  'Origin-Agent-Cluster', 'X-Permitted-Cross-Domain-Policies', 'Referrer-Policy',
+  'X-XSS-Protection', 'RateLimit-Limit', 'RateLimit-Reset', 'ETag',
+  'User-Agent', 'Accept', 'Accept-Encoding',
+];
+
+if (!dev) headerBlacklist.push('Authorization', 'Set-Cookie', 'Cookie');
+
 module.exports = {
   requestLogger: expressWinston.logger({
     transports: [
@@ -20,16 +32,8 @@ module.exports = {
     metaField: null,
     requestWhitelist: ['method', 'url', 'headers', 'body'],
     responseWhitelist: ['status', 'headers', 'body'],
-    bodyBlacklist: dev ? [] : ['password', 'token'],
-    headerBlacklist: [
-      'Server', 'Content-Length', 'Connection', 'Content-Security-Policy',
-      'Cross-Origin-Embedder-Policy', 'Cross-Origin-Opener-Policy',
-      'Cross-Origin-Resource-Policy', 'X-DNS-Prefetch-Control', 'X-Frame-Options',
-      'Strict-Transport-Security', 'X-Download-Options', 'X-Content-Type-Options',
-      'Origin-Agent-Cluster', 'X-Permitted-Cross-Domain-Policies', 'Referrer-Policy',
-      'X-XSS-Protection', 'RateLimit-Limit', 'RateLimit-Reset', 'ETag',
-      'User-Agent', 'Accept', 'Accept-Encoding',
-    ],
+    bodyBlacklist: (dev ? null : ['password', 'token']),
+    headerBlacklist,
   }),
 
   errorLogger: expressWinston.errorLogger({
@@ -43,6 +47,6 @@ module.exports = {
       }) => `${timestamp}\n${message}\n${str(meta.error)}\n${str(meta.message)}\n${str(meta.req)}\n\n`),
     ),
     requestWhitelist: ['method', 'url', 'body'],
-    blacklistedMetaFields: dev ? [] : ['req.body.password'],
+    blacklistedMetaFields: (dev ? null : ['req.body.password']),
   }),
 };

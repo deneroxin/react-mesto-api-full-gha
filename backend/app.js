@@ -1,12 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { Status, InternalServerError } = require('./errors');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-dotenv.config();
+require('dotenv').config();
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 const allowedCors = [
