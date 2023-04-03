@@ -26,13 +26,14 @@ class Auth {
       body: JSON.stringify(body),
       credentials: 'include'
     })
-    .then((response) => {
-      if (response.ok) {
-        const jwt = response.headers.get('Authorization'); // Если авторизуемся через заголовки, то вызываем этот метод.
-        if (jwt) localStorage.setItem('jwt', jwt);  // Если авторизуемся через заголовки, то вызываем этот метод.
-      }
-      return this._getData(response);
-    });
+    .then(this._getData);
+    // .then((response) => {
+    //   if (response.ok) {
+    //     const jwt = response.headers.get('Authorization'); // Если авторизуемся через заголовки, то вызываем этот метод.
+    //     if (jwt) localStorage.setItem('jwt', jwt);  // Если авторизуемся через заголовки, то вызываем этот метод.
+    //   }
+    //   return this._getData(response);
+    // });
   }
 
   signOut() {

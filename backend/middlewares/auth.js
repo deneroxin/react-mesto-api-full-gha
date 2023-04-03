@@ -3,11 +3,13 @@ const { getSecretKey } = require('../utils');
 const { GeneralError, Status } = require('../error');
 
 module.exports = function authorize(req, res, next) {
-  let { jwt: token } = req.cookies;
+  let token;
+  const method = process.env.AUTHENTICATION_METHOD.toLowerCase();
   const error = new GeneralError('Необходима авторизация', Status.UNAUTHORIZED);
-  if (!token) {
-    // Тест не хочет работать с куками, поэтому пришлось добавить альтернативный
-    // метод авторицации, через заголовок, чтобы можно было пройти тесты.
+  if (method === 'cookie') {
+    token = req.cookies.jwt;
+    if (!token) next(error);
+  } else {
     token = req.get('Authorization');
     if (!token || !token.startsWith('Bearer ')) next(error);
     token = token.replace('Bearer ', '');

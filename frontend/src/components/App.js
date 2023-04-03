@@ -35,7 +35,7 @@ export default function App() {
   const navigate = useNavigate();
 
   React.useEffect(function checkAuthorization() {
-    api.prepareAuthorizationHeader(); // Если авторизуемся через заголовки, то вызываем этот метод.
+    prepareAuthorization(); // Если авторизуемся через заголовки, то вызываем этот метод.
     // При первоначальном запуске приложения пробуем запросить информацию о себе.
     // Если у нас есть cookie с токеном, и он не просрочен, то запрос будет выполнен.
     // В этом случае мы переходим на корневой маршрут, даже если пользователь набрал /sign-up или /sign-in
@@ -47,10 +47,24 @@ export default function App() {
     console.log(`Server responded with error: ${err.statusCode} - ${err.message}`);
   }
 
+  // Если авторизуемся через заголовки, нужна эта функция.
+  function prepareAuthorization() {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) api.setAuthorizationHeader(jwt);
+  }
+
+  // Если авторизуемся через заголовки, нужна эта функция.
+  function clearAuthorization() {
+    api.clearAuthorizationHeader();
+    localStorage.removeItem('jwt');
+  }
+
   function authorize(authorizationRequest) {
     return authorizationRequest
-      .then((userData) => {
-        api.prepareAuthorizationHeader(); // Если авторизуемся через заголовки, то вызываем этот метод.
+      .then((response) => {
+        const { token, ...userData } = response; // Если авторизуемся через заголовки.
+        localStorage.setItem('jwt', token); // Если авторизуемся через заголовки.
+        prepareAuthorization(); // Если авторизуемся через заголовки.
         setCurrentUser(userData);
         navigate('/', { replace: true });
         return api.getInitialCards();
@@ -70,8 +84,7 @@ export default function App() {
   function exit() {
     auth.signOut()
       .then(() => {
-        api.clearAuthorizationHeader(); // Если авторизуемся через заголовки, то вызываем этот метод.
-        localStorage.removeItem('jwt'); // Если авторизуемся через заголовки, то вызываем этот метод.
+        clearAuthorization(); // Если авторизуемся через заголовки, то вызываем этот метод.
         setCurrentUser(null);
         setLoadingComplete(false);
         navigate('/sign-in');

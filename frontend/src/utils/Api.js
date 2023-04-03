@@ -11,9 +11,8 @@ class Api {
     });
   }
 
-  prepareAuthorizationHeader() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) this._auth['Authorization'] = `Bearer ${jwt}`;
+  setAuthorizationHeader(jwt) {
+    this._auth['Authorization'] = `Bearer ${jwt}`;
   }
 
   clearAuthorizationHeader() {

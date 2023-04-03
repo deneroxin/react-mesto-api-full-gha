@@ -15,16 +15,22 @@ module.exports = {
           getSecretKey(),
           { expiresIn: '7d' },
         );
-        res.status(Status.OK)
-          // .cookie('jwt', token, {
-          //   maxAge: 3600000 * 24 * 7,
-          //   httpOnly: true,
-          //   sameSite: 'none',
-          //   secure: true,
-          // })
-          .set('Authorization', token)
-          .set('Access-Control-Expose-Headers', 'Authorization')
-          .send(user);
+        res.status(Status.OK);
+        const method = process.env.AUTHENTICATION_METHOD.toLowerCase();
+        if (method === 'cookie') {
+          res.cookie('jwt', token, {
+            maxAge: 3600000 * 24 * 7,
+            httpOnly: true,
+            sameSite: 'none',
+            secure: true,
+          }).send(user);
+        } else if (method === 'bearer, provided in headers') {
+          res.set('Authorization', token)
+            .set('Access-Control-Expose-Headers', 'Authorization')
+            .send(user);
+        } else {
+          res.send({ ...user, token });
+        }
       })
       .catch((err) => throwError(err, next));
   },
