@@ -4,9 +4,7 @@ const dotenv = require('dotenv');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { Status, InternalServerError } = require('./errors');
-const {
-  requestLogger, errorLogger, bodyLogger, makeSureDotenvPickedUpAndParsed,
-} = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 dotenv.config();
 
@@ -21,9 +19,6 @@ const app = express();
 
 app.use(helmet());
 app.use(express.json());
-
-app.use(makeSureDotenvPickedUpAndParsed);
-app.use(bodyLogger);
 
 app.use(requestLogger);
 

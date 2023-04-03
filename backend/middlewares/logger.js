@@ -1,26 +1,20 @@
 const winston = require('winston');
-const fs = require('fs');
 const expressWinston = require('express-winston');
 
-function createBodyLogger() {
-  if (process.env.NODE_ENV === 'debug') {
-    return function (req, res, next) {
-      fs.appendFile('console.log', `${JSON.stringify(req.body)}\n`, next);
-    };
-  }
-  return function (req, res, next) {
-    next();
-  };
-}
+const { combine, printf } = winston.format;
 
 module.exports = {
   requestLogger: expressWinston.logger({
     transports: [
       new winston.transports.File({ filename: 'request.log' }),
     ],
-    format: winston.format.json(),
+    format: combine(
+      winston.format.timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
+      printf(({
+        timestamp, method, url, headers, body,
+      }) => `${timestamp}\n${method} ${url}\n${JSON.stringify(headers)}\n${JSON.stringify(body)}\n\n`),
+    ),
     metaField: null,
-    meta: false,
     requestWhitelist: ['method', 'url', 'headers', 'body'],
     responseWhitelist: ['status', 'headers', 'body'],
     bodyBlacklist: ['password', 'token'],
@@ -39,18 +33,13 @@ module.exports = {
     transports: [
       new winston.transports.File({ filename: 'error.log' }),
     ],
-    format: winston.format.json(),
+    format: combine(
+      winston.format.timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
+      printf(({
+        timestamp, error, message, method, url, body,
+      }) => `${timestamp}\n${message}\n${JSON.stringify(error)}\n${method} ${url}\n${JSON.stringify(body)}\n\n`),
+    ),
+    metaField: null,
     requestWhitelist: ['method', 'url', 'body'],
   }),
-
-  bodyLogger: createBodyLogger(),
-
-  makeSureDotenvPickedUpAndParsed: (req, res, next) => {
-    const { NODE_ENV, JWT_SECRET, AUTHENTICATION_METHOD } = process.env;
-    fs.appendFile(
-      'console.log',
-      `.env content: ${NODE_ENV} ${JWT_SECRET} ${AUTHENTICATION_METHOD}\n`,
-      next,
-    );
-  },
 };
