@@ -8,7 +8,7 @@ const { requestLogger, errorLogger, bodyLogger } = require('./middlewares/logger
 
 dotenv.config();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, NODE_ENV } = process.env;
 const allowedCors = [
   'https://mesto.deneroxin.nomoredomains.work',
   'http://localhost:3000',
@@ -49,9 +49,12 @@ app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
-  const { statusCode = Status.INTERNAL_SERVER_ERROR } = err;
-  const message = statusCode === Status.INTERNAL_SERVER_ERROR ? 'На сервере произошла ошибка' : err.message;
-  res.status(statusCode).send({ message });
+  const { statusCode = Status.INTERNAL_SERVER_ERROR, message } = err;
+  let response = { message };
+  if (statusCode === Status.INTERNAL_SERVER_ERROR) {
+    response = NODE_ENV === 'production' ? { message: 'На сервере произошла ошибка' } : err;
+  }
+  res.status(statusCode).send(response);
   next();
 });
 

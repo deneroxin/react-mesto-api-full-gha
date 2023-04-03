@@ -36,10 +36,13 @@ module.exports = {
   },
 
   clearCookie: (req, res) => {
-    res.clearCookie('jwt', {
-      sameSite: 'none',
-      secure: true,
-    }).send({ message: 'Выход' });
+    if (process.env.AUTHENTICATION_METHOD.toLowerCase() === 'cookie') {
+      res.clearCookie('jwt', {
+        sameSite: 'none',
+        secure: true,
+      });
+    }
+    res.send({ message: 'Выход' });
   },
 
   getAllUsers: (req, res, next) => {
