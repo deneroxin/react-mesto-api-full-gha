@@ -1,5 +1,7 @@
 const Card = require('../models/card');
-const { GeneralError, Status, throwError } = require('../error');
+const {
+  Status, throwError, NotFoundError, ForbiddenError,
+} = require('../errors');
 
 module.exports = {
 
@@ -25,9 +27,9 @@ module.exports = {
     const { cardId } = req.params;
     Card.findById(cardId)
       .then((foundCard) => {
-        if (!foundCard) throw new GeneralError('Карточка не найдена', Status.NOT_FOUND);
+        if (!foundCard) throw new NotFoundError('Карточка не найдена');
         if (foundCard.get('owner', String) !== req.user._id) {
-          throw new GeneralError('Нельзя удалять чужие карточки', Status.FORBIDDEN);
+          throw new ForbiddenError('Нельзя удалять чужие карточки', Status.FORBIDDEN);
         }
         Card.findByIdAndRemove(cardId)
           .then((oldCard) => {
@@ -46,7 +48,7 @@ module.exports = {
     )
       .populate('likes')
       .then((updatedCard) => {
-        if (!updatedCard) throw new GeneralError('Карточка не найдена', Status.NOT_FOUND);
+        if (!updatedCard) throw new NotFoundError('Карточка не найдена');
         res.status(Status.OK).send(updatedCard);
       })
       .catch((err) => throwError(err, next));
@@ -60,7 +62,7 @@ module.exports = {
     )
       .populate('likes')
       .then((updatedCard) => {
-        if (!updatedCard) throw new GeneralError('Карточка не найдена', Status.NOT_FOUND);
+        if (!updatedCard) throw new NotFoundError('Карточка не найдена');
         res.status(Status.OK).send(updatedCard);
       })
       .catch((err) => throwError(err, next));

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const cookieParser = require('cookie-parser');
 const { Joi, celebrate } = require('celebrate');
-const { GeneralError, Status } = require('../error');
+const { NotFoundError } = require('../errors');
 const { login, clearCookie, createUser } = require('../controllers/users');
 const authorize = require('../middlewares/auth');
 const { validationPatterns, createRateLimiter } = require('../utils');
@@ -41,7 +41,7 @@ router.use('/users', require('./users'));
 router.use('/cards', require('./cards'));
 
 router.use((req, res, next) => {
-  next(new GeneralError('Ресурс не найден', Status.NOT_FOUND));
+  next(new NotFoundError('Ресурс не найден'));
 });
 
 module.exports = router;

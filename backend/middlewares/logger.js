@@ -30,4 +30,8 @@ module.exports = {
   }),
 
   bodyLogger: createBodyLogger(),
+
+  makeSureDotenvPickedUpAndParsed: (req, res, next) => {
+    fs.appendFile('console.log', `.env content: ${JSON.stringify(process.env)}\n`, next);
+  },
 };

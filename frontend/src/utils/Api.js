@@ -2,7 +2,7 @@ class Api {
   constructor({ baseUrl, commonHeaders }) {
     this._baseUrl = baseUrl;
     this._headers = commonHeaders;
-    this._auth = {};
+    this._auth = {};  // Если авторизуемся через заголовки.
   }
 
   _getData(res) {
@@ -11,10 +11,12 @@ class Api {
     });
   }
 
+  // Если авторизуемся через заголовки, нужен этот метод.
   setAuthorizationHeader(jwt) {
     this._auth['Authorization'] = `Bearer ${jwt}`;
   }
 
+  // Если авторизуемся через заголовки, нужен этот метод.
   clearAuthorizationHeader() {
     delete this._auth['Authorization'];
   }
@@ -22,8 +24,8 @@ class Api {
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      headers: this._auth,
-      credentials: 'include'
+      headers: this._auth, // Если авторизуемся через заголовки.
+      credentials: 'include' // Если авторизуемся через куки.
     })
     .then(this._getData);
   }
@@ -31,8 +33,8 @@ class Api {
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'GET',
-      headers: this._auth,
-      credentials: 'include'
+      headers: this._auth, // Если авторизуемся через заголовки.
+      credentials: 'include' // Если авторизуемся через куки.
     })
     .then(this._getData);
   }
@@ -42,7 +44,7 @@ class Api {
       method: 'PATCH',
       headers: { ...this._headers, ...this._auth },
       body: JSON.stringify(newData),
-      credentials: 'include'
+      credentials: 'include' // Если авторизуемся через куки.
     })
     .then(this._getData);
   }
@@ -52,7 +54,7 @@ class Api {
       method: 'POST',
       headers: { ...this._headers, ...this._auth },
       body: JSON.stringify(cardData),
-      credentials: 'include'
+      credentials: 'include' // Если авторизуемся через куки.
     })
     .then(this._getData);
   }
@@ -60,8 +62,8 @@ class Api {
   removeCard({_id}) {
     return fetch(`${this._baseUrl}/cards/${_id}`, {
       method: 'DELETE',
-      headers: this._auth,
-      credentials: 'include'
+      headers: this._auth, // Если авторизуемся через заголовки.
+      credentials: 'include' // Если авторизуемся через куки.
     })
     .then(this._getData);
   }
@@ -69,8 +71,8 @@ class Api {
   likeCard(isLiked, {_id}) {
     return fetch(`${this._baseUrl}/cards/${_id}/likes`, {
       method: isLiked ? 'PUT' : 'DELETE',
-      headers: this._auth,
-      credentials: 'include'
+      headers: this._auth, // Если авторизуемся через заголовки.
+      credentials: 'include' // Если авторизуемся через куки.
     })
     .then(this._getData);
   }
@@ -80,7 +82,7 @@ class Api {
       method: 'PATCH',
       headers: { ...this._headers, ...this._auth },
       body: JSON.stringify(data),
-      credentials: 'include'
+      credentials: 'include' // Если авторизуемся через куки.
     })
     .then(this._getData);
   }

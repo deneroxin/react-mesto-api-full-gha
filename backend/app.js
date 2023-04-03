@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const { Status } = require('./error');
-const { requestLogger, errorLogger, bodyLogger } = require('./middlewares/logger');
+const { Status, InternalServerError } = require('./errors');
+const {
+  requestLogger, errorLogger, bodyLogger, makeSureDotenvPickedUpAndParsed,
+} = require('./middlewares/logger');
 
 dotenv.config();
 
-const { PORT = 3000, NODE_ENV } = process.env;
+const { PORT = 3000 } = process.env;
 const allowedCors = [
   'https://mesto.deneroxin.nomoredomains.work',
   'http://localhost:3000',
@@ -20,6 +22,7 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
+app.use(makeSureDotenvPickedUpAndParsed);
 app.use(bodyLogger);
 
 app.use(requestLogger);
@@ -49,12 +52,10 @@ app.use(errorLogger);
 app.use(errors());
 
 app.use((err, req, res, next) => {
-  const { statusCode = Status.INTERNAL_SERVER_ERROR, message } = err;
-  let response = { message };
-  if (statusCode === Status.INTERNAL_SERVER_ERROR) {
-    response = NODE_ENV === 'production' ? { message: 'На сервере произошла ошибка' } : err;
-  }
-  res.status(statusCode).send(response);
+  const { statusCode = InternalServerError.statusCode } = err;
+  const message = (statusCode === InternalServerError.statusCode)
+    ? { message: 'На сервере произошла ошибка' } : err.message;
+  res.status(statusCode).send({ message });
   next();
 });
 

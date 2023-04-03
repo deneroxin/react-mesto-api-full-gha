@@ -1,6 +1,6 @@
 const rateLimiter = require('express-rate-limit');
 
-const { GeneralError } = require('../error');
+const { GeneralError } = require('../errors');
 
 const validationPatterns = {
   patternURL: /^https?:\/\/(?:www\.)?(?:[a-z\d-]+\.)+[a-z]+\/[-\w.~:/?#[\]@!$&'()*+,;=]+#?$/,

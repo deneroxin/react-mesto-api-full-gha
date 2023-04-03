@@ -1,23 +1,16 @@
 const { ValidationError, CastError } = require('mongoose').Error;
+const { BadRequestError } = require('./BadRequestError');
+const { ConflictError } = require('./ConflictError');
+const { ForbiddenError } = require('./ForbiddenError');
+const { NotFoundError } = require('./NotFoundError');
+const { UnauthorizedError } = require('./UnauthorizedError');
+const { InternalServerError } = require('./InternalServerError');
 
 const Status = {
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  FORBIDDEN: 403,
-  NOT_FOUND: 404,
-  CONFLICT: 409,
-  INTERNAL_SERVER_ERROR: 500,
 };
-
-class GeneralError extends Error {
-  constructor(message, statusCode) {
-    super(message);
-    this.statusCode = statusCode;
-  }
-}
 
 function throwError(err, next) {
   // Решил сделать так: если база данных отправляет ошибку, связанную с валидацией,
@@ -27,13 +20,25 @@ function throwError(err, next) {
   // то передаём их как есть, с кодом 500, а дефолтный обработчик,
   // в случае кода 500, заменит текст ошибки на свой.
   if (err instanceof ValidationError || err instanceof CastError) {
-    next(new GeneralError(err.message, Status.BAD_REQUEST));
+    next(new BadRequestError(err.message));
   }
   next(err);
 }
 
+class GeneralError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+  }
+}
+
 module.exports = {
   Status,
-  GeneralError,
   throwError,
+  GeneralError,
+  ConflictError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+  InternalServerError,
 };
