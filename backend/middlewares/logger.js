@@ -1,7 +1,6 @@
 const winston = require('winston');
 const fs = require('fs');
 const expressWinston = require('express-winston');
-const { NotFoundError, UnauthorizedError } = require('../errors');
 
 function createBodyLogger() {
   if (process.env.NODE_ENV === 'debug') {
@@ -20,7 +19,20 @@ module.exports = {
       new winston.transports.File({ filename: 'request.log' }),
     ],
     format: winston.format.json(),
-    msg: (req, res) => `${req.protocol}://${req.method} --> ${res.statusCode}`,
+    metaField: null,
+    meta: false,
+    requestWhitelist: ['method', 'url', 'headers', 'body'],
+    responseWhitelist: ['status', 'headers', 'body'],
+    bodyBlacklist: ['password', 'token'],
+    headerBlacklist: [
+      'Server', 'Content-Length', 'Connection', 'Content-Security-Policy',
+      'Cross-Origin-Embedder-Policy', 'Cross-Origin-Opener-Policy',
+      'Cross-Origin-Resource-Policy', 'X-DNS-Prefetch-Control', 'X-Frame-Options',
+      'Strict-Transport-Security', 'X-Download-Options', 'X-Content-Type-Options',
+      'Origin-Agent-Cluster', 'X-Permitted-Cross-Domain-Policies', 'Referrer-Policy',
+      'X-XSS-Protection', 'RateLimit-Limit', 'RateLimit-Reset', 'ETag',
+      'User-Agent', 'Accept', 'Accept-Encoding',
+    ],
   }),
 
   errorLogger: expressWinston.errorLogger({
@@ -28,19 +40,16 @@ module.exports = {
       new winston.transports.File({ filename: 'error.log' }),
     ],
     format: winston.format.json(),
+    requestWhitelist: ['method', 'url', 'body'],
   }),
 
   bodyLogger: createBodyLogger(),
 
   makeSureDotenvPickedUpAndParsed: (req, res, next) => {
     const { NODE_ENV, JWT_SECRET, AUTHENTICATION_METHOD } = process.env;
-    fs.appendFileSync(
-      'console.log',
-      `.env content: ${NODE_ENV} ${JWT_SECRET} ${AUTHENTICATION_METHOD}\n`,
-    );
     fs.appendFile(
       'console.log',
-      `errors: ${new NotFoundError().statusCode} ${new UnauthorizedError().statusCode}`,
+      `.env content: ${NODE_ENV} ${JWT_SECRET} ${AUTHENTICATION_METHOD}\n`,
       next,
     );
   },

@@ -76,7 +76,6 @@ export default function App() {
   function authorize(authorizationRequest) {
     return authorizationRequest
       .then((response) => {
-          console.log("AUTHORIZATION then 1");
         const { token, ...userData } = response; // Если авторизуемся через заголовки.
         localStorage.setItem('jwt', token); // Если авторизуемся через заголовки.
         prepareAuthorization(); // Если авторизуемся через заголовки.
@@ -85,12 +84,10 @@ export default function App() {
         return api.getInitialCards();
       })
       .then((res) => {
-          console.log("AUTHORIZATION then 2");
         res.sort(sortByRatingThenByName);
         setCards(res);
       })
       .finally(() => {
-          console.log("AUTHORIZATION finally 1");
         setLoadingComplete(true)
       });
   }
@@ -115,10 +112,7 @@ export default function App() {
     setIsMakingRequest(true);
     authorize(auth.signIn(data))
       .then(onSuccess)
-      .catch(error => {
-        console.log("AUTHORIZATION ERROR", error);
-        onError(error.message)
-      })
+      .catch(error => onError(error.message))
       .finally(() => setIsMakingRequest(false));
   }
 
