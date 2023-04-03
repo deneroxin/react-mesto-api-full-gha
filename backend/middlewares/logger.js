@@ -3,6 +3,9 @@ const expressWinston = require('express-winston');
 
 const { combine, printf } = winston.format;
 
+const dev = (process.env.NODE_ENV === 'development');
+const str = JSON.stringify;
+
 module.exports = {
   requestLogger: expressWinston.logger({
     transports: [
@@ -11,13 +14,13 @@ module.exports = {
     format: combine(
       winston.format.timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
       printf(({
-        timestamp, method, url, headers, body,
-      }) => `${timestamp}\n${method} ${url}\n${JSON.stringify(headers)}\n${JSON.stringify(body)}\n\n`),
+        timestamp, req, res,
+      }) => `${timestamp}\n${req.method} ${req.url}\n${str(req.headers)}\n${str(req.body)}\n${str(res.body)}\n\n`),
     ),
     metaField: null,
     requestWhitelist: ['method', 'url', 'headers', 'body'],
     responseWhitelist: ['status', 'headers', 'body'],
-    bodyBlacklist: ['password', 'token'],
+    bodyBlacklist: dev ? [] : ['password', 'token'],
     headerBlacklist: [
       'Server', 'Content-Length', 'Connection', 'Content-Security-Policy',
       'Cross-Origin-Embedder-Policy', 'Cross-Origin-Opener-Policy',
@@ -36,10 +39,10 @@ module.exports = {
     format: combine(
       winston.format.timestamp({ format: 'YYYY-MM-DD hh:mm:ss.SSS A' }),
       printf(({
-        timestamp, error, message, method, url, body,
-      }) => `${timestamp}\n${message}\n${JSON.stringify(error)}\n${method} ${url}\n${JSON.stringify(body)}\n\n`),
+        timestamp, message, meta,
+      }) => `${timestamp}\n${message}\n${str(meta.error)}\n${str(meta.message)}\n${str(meta.req)}\n\n`),
     ),
-    metaField: null,
     requestWhitelist: ['method', 'url', 'body'],
+    blacklistedMetaFields: dev ? [] : ['req.body.password'],
   }),
 };
