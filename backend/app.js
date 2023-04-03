@@ -54,7 +54,7 @@ app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = InternalServerError.statusCode } = err;
   const message = (statusCode === InternalServerError.statusCode)
-    ? { message: 'На сервере произошла ошибка' } : err.message;
+    ? 'На сервере произошла ошибка' : err.message;
   res.status(statusCode).send({ message });
   next();
 });

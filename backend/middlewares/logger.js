@@ -1,6 +1,7 @@
 const winston = require('winston');
 const fs = require('fs');
 const expressWinston = require('express-winston');
+const { NotFoundError, UnauthorizedError } = require('../errors');
 
 function createBodyLogger() {
   if (process.env.NODE_ENV === 'debug') {
@@ -32,6 +33,15 @@ module.exports = {
   bodyLogger: createBodyLogger(),
 
   makeSureDotenvPickedUpAndParsed: (req, res, next) => {
-    fs.appendFile('console.log', `.env content: ${JSON.stringify(process.env)}\n`, next);
+    const { NODE_ENV, JWT_SECRET, AUTHENTICATION_METHOD } = process.env;
+    fs.appendFileSync(
+      'console.log',
+      `.env content: ${NODE_ENV} ${JWT_SECRET} ${AUTHENTICATION_METHOD}\n`,
+    );
+    fs.appendFile(
+      'console.log',
+      `errors: ${new NotFoundError().statusCode} ${new UnauthorizedError().statusCode}`,
+      next,
+    );
   },
 };
