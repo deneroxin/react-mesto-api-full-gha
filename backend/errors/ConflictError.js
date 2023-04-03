@@ -1,2 +1,10 @@
-class ConflictError extends Error { static statusCode = 409; }
+class ConflictError extends Error {
+  static code = 409;
+
+  constructor(message) {
+    super(message);
+    this.statusCode = ConflictError.code;
+  }
+}
+
 module.exports = { ConflictError };
