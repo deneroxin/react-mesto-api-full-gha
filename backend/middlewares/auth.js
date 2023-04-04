@@ -19,10 +19,10 @@ module.exports = function authorize(req, res, next) {
   const error = new UnauthorizedError('Необходима авторизация');
   if (method === 'cookie') {
     token = req.cookies.jwt;
-    if (!token) next(error);
+    if (!token) throw error;
   } else {
     token = req.get('Authorization');
-    if (!token || !token.startsWith('Bearer ')) next(error);
+    if (!token || !token.startsWith('Bearer ')) throw error;
     token = token.replace('Bearer ', '');
   }
   try {

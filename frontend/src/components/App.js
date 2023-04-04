@@ -85,18 +85,10 @@ export default function App() {
         navigate('/', { replace: true });
         return api.getInitialCards();
       })
-      .then((res) => {
-        res.sort(sortByRatingThenByName);
-        setCards(res);
-      })
+      .then(setCards)
       .finally(() => {
         setLoadingComplete(true)
       });
-  }
-
-  function sortByRatingThenByName(a, b) {
-    if (a.likes.length != b.likes.length) return b.likes.length - a.likes.length;
-    return (a.name < b.name ? -1 : (b.name < a.name) ? 1 : 0);
   }
 
   function exit() {

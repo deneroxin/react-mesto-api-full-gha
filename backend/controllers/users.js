@@ -64,6 +64,7 @@ module.exports = {
 
   getAllUsers: (req, res, next) => {
     User.find({})
+      .sort('-createdAt')
       .then((arrayOfUsers) => {
         res.status(Status.OK).send(arrayOfUsers);
       })
@@ -93,16 +94,22 @@ module.exports = {
     bcrypt.hash(req.body.password, 10)
       .then((hash) => User.create([{ ...req.body, password: hash }], { validateBeforeSave: true }))
       .then(([newlyCreatedUser]) => {
-        // возможно, из-за того, что create() возвращает Promise, а не Query,
-        // select: false не работает с create(), и пароль приходится отсеивать вручную:
-        const { password, ...newUserData } = newlyCreatedUser.toObject();
-        res.status(Status.CREATED).send({ data: newUserData });
+        // Спасибо за разъяснение причины несрабатывания select: false -
+        // это разъяснение прямо таки расставило всё на свои места!
+        // Также интересно было узнать о назначении таких полезных опций как toJSON, toObject,
+        // и об использовании в рамках этих опций функции transform(doc, ret, options)!
+        // Прочитал, что есть ещё SchemaType.prototype.transform(v) - для отдельного поля.
+        // Интересно, если такая функция вернёт undefined (для поля password, например),
+        // то будет ли эффект тем же - т.е. будет ли такое поле проигнорировано и исключено?
+        // Об этом в описании функции как-то ничего не говорится.
+        res.status(Status.CREATED).send(newlyCreatedUser);
       })
       .catch((err) => {
         if (err.code === 11000) {
           next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
+        } else {
+          throwError(err, next);
         }
-        throwError(err, next);
       });
   },
 

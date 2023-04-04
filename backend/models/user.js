@@ -39,17 +39,25 @@ const userSchema = new mongoose.Schema({
     },
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
   },
+}, {
+  toJSON: {
+    transform: function removePassword(doc, ret) {
+      const retAlias = ret; // linter ругается, но нет уверенности, что добавление лишних
+      delete retAlias.password; //                      игнорирующих опций будет одобрено:
+      return retAlias; //                no-param-reassign: ["error", { "props": false }]
+    },
+  },
 });
 
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
-      const error = new UnauthorizedError('Введён неверный адрес почты или пароль');
-      if (!user) throw error;
+      const message = 'Введён неверный адрес почты или пароль';
+      if (!user) throw new UnauthorizedError(message);
       const { password: hash, ...userData } = user.toObject();
       return bcrypt.compare(password, hash)
         .then((matched) => {
-          if (!matched) throw error;
+          if (!matched) throw new UnauthorizedError(message);
           return userData;
         });
     });

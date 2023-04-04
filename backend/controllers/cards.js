@@ -7,8 +7,9 @@ module.exports = {
 
   getAllCards: (req, res, next) => {
     Card.find({})
-      .populate('likes')
-      .then((result) => {
+      .sort('-createdAt')
+      .populate('likes') // А есть ли вообще смысл разворачивать likes? Ведь для всех наших целей
+      .then((result) => { //                               достаточно иметь только _id пользователей
         res.status(Status.OK).send(result);
       })
       .catch((err) => throwError(err, next));
@@ -46,8 +47,8 @@ module.exports = {
       { $addToSet: { likes: req.user._id } },
       { new: true },
     )
-      .populate('likes')
-      .then((updatedCard) => {
+      .populate('likes') // Опять же, чтобы посчитать кол-во лайков и окрасить сердечко,
+      .then((updatedCard) => { //                  нужны только _id, и можно было не расширять likes
         if (!updatedCard) throw new NotFoundError('Карточка не найдена');
         res.status(Status.OK).send(updatedCard);
       })
@@ -60,7 +61,7 @@ module.exports = {
       { $pull: { likes: req.user._id } },
       { new: true },
     )
-      .populate('likes')
+      .populate('likes') // И здесь аналогично
       .then((updatedCard) => {
         if (!updatedCard) throw new NotFoundError('Карточка не найдена');
         res.status(Status.OK).send(updatedCard);
