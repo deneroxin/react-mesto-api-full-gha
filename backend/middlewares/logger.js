@@ -39,8 +39,9 @@ ${str(res.body)}\n\n`),
     requestWhitelist: ['method', 'url', 'headers', 'body'],
     responseWhitelist: ['status', 'headers', 'body'],
     bodyBlacklist: (dev ? null : ['password', 'token']),
-    responseFilter: (req, prop) => (prop === 'body.token' ? undefined : getProp(req, prop)),
     headerBlacklist,
+    // Никаким способом не удаётся отсеить защищённые поля ответа, и следующим тоже:
+    responseFilter: (req, prop) => (prop === 'body.token' && !dev ? undefined : getProp(req, prop)),
   }),
 
   errorLogger: expressWinston.errorLogger({
@@ -54,7 +55,8 @@ ${str(meta.message)}
 ${str(meta.req)}\n\n`),
     ),
     requestWhitelist: ['method', 'url', 'body'],
-    requestFilter: (req, prop) => (prop === 'body.password' ? undefined : getProp(req, prop)),
-    // blacklistedMetaFields: (dev ? null : ['req.body.password']),
+    // Ни одним из перечисленных ниже способов не удаётся отсеить защищенные поля:
+    requestFilter: (req, prop) => (prop === 'body.password' && !dev ? undefined : getProp(req, prop)),
+    blacklistedMetaFields: (dev ? null : ['req.body.password']),
   }),
 };
