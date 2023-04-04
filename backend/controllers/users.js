@@ -64,7 +64,7 @@ module.exports = {
 
   getAllUsers: (req, res, next) => {
     User.find({})
-      .sort('-createdAt')
+      .sort('name email')
       .then((arrayOfUsers) => {
         res.status(Status.OK).send(arrayOfUsers);
       })
