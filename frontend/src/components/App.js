@@ -77,8 +77,10 @@ export default function App() {
     return authorizationRequest
       .then((response) => {
         const { token, ...userData } = response; // Если авторизуемся через заголовки.
-        localStorage.setItem('jwt', token); // Если авторизуемся через заголовки.
-        prepareAuthorization(); // Если авторизуемся через заголовки.
+        if (token) {
+          localStorage.setItem('jwt', token); // Если авторизуемся через заголовки.
+          prepareAuthorization(); // Если авторизуемся через заголовки.
+        }
         setCurrentUser(userData);
         navigate('/', { replace: true });
         return api.getInitialCards();
